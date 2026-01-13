@@ -10,6 +10,7 @@ export default function Home() {
   const [form, setForm] = useState({ name: '', phone: '', type: '', message: '' })
   const [success, setSuccess] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [heroKey, setHeroKey] = useState(0)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -21,6 +22,13 @@ export default function Home() {
 	  { img: "/story/3.png", title: "PLANNING", desc: "Precision in every detail." },
 	  { img: "/story/4.png", title: "CONSTRUCTION", desc: "Crafted by experts, built to last." },
 	  { img: "/story/5.png", title: "DELIVERY", desc: "On time. On budget. With trust." },
+  ]
+  
+  const whyItems = [
+	  { title: "On-Time Delivery", desc: "We respect your time and commitments." },
+	  { title: "Transparent Costing", desc: "No hidden charges, no surprises." },
+	  { title: "Quality Materials", desc: "Built to last, not just to look good." },
+	  { title: "Professional Supervision", desc: "Every stage monitored by experts." },
   ]
   
   const [current, setCurrent] = useState(0)
@@ -69,46 +77,32 @@ export default function Home() {
       alert('Failed to send enquiry. Please try again.')
     }
   }
-  
-
- const RiseSection = ({ children, className = "" }) => {
-	  const ref = useRef(null)
-
-	  useEffect(() => {
-		const observer = new IntersectionObserver(
-		  ([entry]) => {
-			if (entry.isIntersecting) {
-			  entry.target.classList.add("in-view")
-			  observer.unobserve(entry.target) // run only once, no blinking ever
-			}
-		  },
-		  { threshold: 0.25 }
-		)
-
-		if (ref.current) observer.observe(ref.current)
-		return () => observer.disconnect()
-	  }, [])
-
-	  return (
-		<section ref={ref} className={`rise-section ${className}`}>
-		  {children}
-		</section>
-	  )
- }
 
   return (
     <main className="bg-black text-white scroll-smooth overflow-x-hidden">
       {/* Header */}
-      <header className="fixed top-0 w-full bg-black/95 backdrop-blur z-50 border-b border-white/10">
+      <header className="fixed top-0 w-full bg-black/95 backdrop-blur z-50 border-b border-white/30">
 		  <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
 			{/* Logo */}
-			<div>
-			  <Image src="/justlogo.png" alt="Space-D" width={40} height={40} priority />
-			</div>
+			<motion.div
+			  className="flex items-center gap-2"
+			  initial={{ x: 40, opacity: 0 }}
+			  animate={{ x: 0, opacity: 1 }}
+			  transition={{ duration: 0.7, ease: "easeOut" }}
+			>
+			  <Image src="/justlogo.png" alt="Space-D" width={50} height={50} priority />
+			 <span className="tracking-widest text-xs md:text-sm text-white">
+				SPACE-D INFRA DEVELOPERS
+			  </span>
+			</motion.div>
 
 			{/* Desktop Menu */}
 			<nav className="hidden md:flex gap-8 text-xs tracking-[0.2em]">
-			  <a href="#home">HOME</a>
+			  <a
+				  href="#home"
+				  onClick={() => setHeroKey(prev => prev + 1)}
+				  className="hover:text-[#FDB614] transition-colors">HOME
+			  </a>
 			  <a href="#about">ABOUT</a>
 			  <a href="#projects">PROJECTS</a>
 			  <a href="#founder">FOUNDER</a>
@@ -139,7 +133,7 @@ export default function Home() {
 	</header>
 
       {/* Hero */}
-      <section id="home" className="relative h-[70vh] md:h-screen pt-20 flex items-center justify-center overflow-hidden">
+      <section key={heroKey} id="home" className="relative h-[70vh] md:h-screen pt-20 flex items-center justify-center overflow-hidden">
         <Image src="/banner.jpg" alt="Space-D Banner" fill priority className="object-cover object-center" />
         <div className="absolute inset-0 bg-black/60" />
 
@@ -224,80 +218,75 @@ export default function Home() {
 		  </div>
 	 </section>
 	 
-	 {/* Core Values */}
+	 {/* Core Values - Why Space D*/}
 	 <section className="bg-black py-8 md:py-16">
 		  <div className="max-w-7xl mx-auto px-6 text-center">
-			<h2 className="text-[#FDB614] tracking-widest mb-6">WHY SPACE-D</h2>
+			<h2 className="text-[#FDB614] tracking-widest mb-10">WHY SPACE-D</h2>
 
-			<div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm md:text-base">
-			  <div>
-				<p className="text-white font-medium">On-Time Delivery</p>
-				<p className="text-white/70 mt-1">We respect your time and commitments.</p>
-			  </div>
+			<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+			  {whyItems.map((item, i) => (
+				<motion.div
+				  key={i}
+				  initial={{ opacity: 0, y: 40 }}
+				  whileInView={{ opacity: 1, y: 0 }}
+				  transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+				  viewport={{ once: true }}
+				  className="bg-black border border-white/10 rounded-lg p-4
+							 transition-transform duration-300
+							 hover:-translate-y-2 hover:shadow-xl"
+				>
+				  <p className="text-white font-medium">{item.title}</p>
+				  <p className="text-white/70 mt-1 text-sm">{item.desc}</p>
+				</motion.div>
+			  ))}
+			</div>
+		  </div>
+	  </section>
+	  
+	  {/* Projects */}
+	  <section id="projects" className="bg-black py-8 md:py-20">
+		  <div className="max-w-7xl mx-auto px-6">
+			<h2 className="text-[#FDB614] tracking-widest mb-10 text-center">
+			  FEATURED PROJECTS
+			</h2>
 
-			  <div>
-				<p className="text-white font-medium">Transparent Costing</p>
-				<p className="text-white/70 mt-1">No hidden charges, no surprises.</p>
-			  </div>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			  {images.map((src, i) => (
+				<div
+				  key={i}
+				  className="relative overflow-hidden rounded-xl group"
+				>
+				  <Image
+					src={src}
+					alt={`Project ${i + 1}`}
+					width={1200}
+					height={800}
+					className="w-full h-[260px] md:h-[360px] object-cover
+							   transition-transform duration-700 ease-out
+							   group-hover:scale-105"
+				  />
 
-			  <div>
-				<p className="text-white font-medium">Quality Materials</p>
-				<p className="text-white/70 mt-1">Built to last, not just to look good.</p>
-			  </div>
+				  <div className="absolute inset-0 bg-black/40 opacity-0
+								  group-hover:opacity-100 transition-opacity duration-500" />
 
-			  <div>
-				<p className="text-white font-medium">Professional Supervision</p>
-				<p className="text-white/70 mt-1">Every stage monitored by experts.</p>
-			  </div>
+				  <div className="absolute bottom-4 left-4 right-4 opacity-0
+								  group-hover:opacity-100 transition-opacity duration-500">
+					<p className="text-[#FDB614] text-sm tracking-widest">
+					  RESIDENTIAL PROJECT
+					</p>
+					<p className="text-white text-xs mt-1">
+					  Space-D Infra Developers
+					</p>
+				  </div>
+				</div>
+			  ))}
 			</div>
 		  </div>
 		</section>
 	  
-	  {/* Projects */}
-	  <section id="projects" className="items-center bg-black py-8 md:py-16">
-		  <div className="max-w-5xl w-full text-center">
-			<h2 className="text-[#FDB614] tracking-widest mb-8">OUR PROJECTS</h2>
-
-			<div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-xl bg-black flex items-center justify-center">
-			  <div className="absolute top-4 left-4 z-20 opacity-80">
-				<Image src="/justlogo.png" alt="Space-D Logo" width={50} height={50} />
-			  </div>
-								
-			  <div
-				className="flex transition-transform duration-700 ease-in-out"
-				style={{ transform: `translateX(-${current * 100}%)` }}
-			  >
-				{images.map((src, i) => (
-				  <Image
-					key={i}
-					src={src}
-					alt={`Project ${i + 1}`}
-					width={1600}
-					height={1000}
-					className="min-w-full object-contain bg-black"
-				  />
-				))}
-			  </div>
-
-			  <button
-				onClick={() => slide(-1)}
-				className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded-full"
-			  >
-				‹
-			  </button>
-
-			  <button
-				onClick={() => slide(1)}
-				className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded-full"
-			  >
-				›
-			  </button>
-			</div>
-		  </div>
-		</section>
 		
 	  {/* Founder */}
-	  <section id="founder" className="min-h-screen flex items-center justify-center bg-black py-8 md:py-10">
+	  <section id="founder" className="min-h-screen flex items-center justify-center bg-black py-15 md:py-10">
 	  <div className="max-w-7xl mx-auto px-6">
 		<motion.div
 		  className="grid md:grid-cols-2 gap-12 items-center"
@@ -320,10 +309,13 @@ export default function Home() {
 
 		  {/* Founder Content */}
 		  <div className="max-w-5xl w-full text-center">
-			<h2 className="text-[#FDB614] tracking-widest mb-4">FOUNDER INFO</h2>
-			<h3 className="text-2xl md:text-3xl tracking-wide mb-4">
-			  Founder & Managing Director
-			</h3>
+			<h2 className="text-[#FDB614] tracking-widest mb-2">FOUNDER INFO</h2>
+			<h3 className="text-2xl md:text-3xl tracking-wide mb-1">
+			  Haris Rahman
+		    </h3>
+			<p className="text-white/70 mb-4">
+			 Founder & Managing Director
+		    </p>
 
 			<p className="text-white/80 leading-relaxed">
 			  Born and based in Kerala, the founder of Space-D Infra Developers carries a deep passion for civil engineering and the art of building meaningful spaces. Driven by a vision to achieve global construction standards, he pursued advanced studies at a reputed university in London, gaining international exposure to modern design, planning, and execution practices.
@@ -448,16 +440,17 @@ export default function Home() {
 			  
 			  {/* Social Media */}
 				<div className="mt-8 flex justify-center gap-6">
-				  <a href="https://instagram.com/yourpage" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
+				  <a href="https://www.instagram.com/space_d_infra_developers/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/instagram.png" className="w-6 h-6" />
 				  </a>
-				  <a href="https://facebook.com/yourpage" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
+				  <a href="https://facebook.com/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/facebook.png" className="w-6 h-6" />
 				  </a>
-				  <a href="https://twitter.com/yourpage" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
+				  <a href="https://twitter.com/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/twitter.png" className="w-6 h-6" />
 				  </a>
-				  <a href="https://whatsapp.com/yourpage" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
+				  <a href="https://wa.me/919995060708?text=Hi%20Space-D%20Infra%20Developers,%20I%20would%20like%20to%20enquire%20about%20construction%20services."
+					 target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/whatsapp.png" className="w-6 h-6" />
 				  </a>
 				</div>

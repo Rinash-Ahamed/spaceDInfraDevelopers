@@ -24,28 +24,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-@font-face {
-  font-family: 'AspireSC';
-  src: url('/fonts/AspireSC-Regular.woff2') format('woff2'),
-       url('/fonts/AspireSC-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-body {
-  font-family: 'AspireSC', sans-serif;
-}
-
-.rise-section {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
-  will-change: transform, opacity;
-}
-
-.rise-section.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
