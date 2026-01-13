@@ -91,7 +91,7 @@ export default function Home() {
 			  transition={{ duration: 0.7, ease: "easeOut" }}
 			>
 			  <Image src="/justlogo.png" alt="Space-D" width={50} height={50} priority />
-			 <span className="tracking-widest text-xs md:text-sm text-white">
+			 <span className="tracking-widest text-xs md:text-xs text-white">
 				SPACE-D INFRA DEVELOPERS
 			  </span>
 			</motion.div>
