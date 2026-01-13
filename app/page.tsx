@@ -53,7 +53,7 @@ export default function Home() {
 	  return () => clearInterval(interval)
   }, [])
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const templateParams = {
