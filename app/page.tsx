@@ -12,9 +12,9 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [heroKey, setHeroKey] = useState(0)
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+	  setForm({ ...form, [e.target.name]: e.target.value })
+	}
   
   const canvaStory = [
 	  { img: "/story/1.png", title: "VISION", desc: "We shape ideas into realities." },
