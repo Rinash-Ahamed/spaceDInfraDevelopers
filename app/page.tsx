@@ -40,13 +40,13 @@ export default function Home() {
 	  '/projects/4.jpg',
   ]
   
-  const slide = (direction) => {
+  const slide = (direction: number) => {
 	  setCurrent((prev) =>
 		direction === 1
 		  ? (prev + 1) % images.length
 		  : (prev - 1 + images.length) % images.length
 	  )
-  }
+	}
   
   useEffect(() => {
 	  const interval = setInterval(() => slide(1), 4000) // auto scroll every 4 sec
