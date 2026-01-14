@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import emailjs from '@emailjs/browser'
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, AnimatePresence } from "framer-motion"
 
 export default function Home() {
 	
@@ -12,9 +12,9 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [heroKey, setHeroKey] = useState(0)
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-	  setForm({ ...form, [e.target.name]: e.target.value })
-	}
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+	setForm({ ...form, [e.target.name]: e.target.value })
+  }	
   
   const canvaStory = [
 	  { img: "/story/1.png", title: "VISION", desc: "We shape ideas into realities." },
@@ -40,7 +40,7 @@ export default function Home() {
 	  '/projects/4.jpg',
   ]
   
-  const slide = (direction: number) => {
+ const slide = (direction: number) => {
 	  setCurrent((prev) =>
 		direction === 1
 		  ? (prev + 1) % images.length
@@ -48,12 +48,34 @@ export default function Home() {
 	  )
 	}
   
-  useEffect(() => {
-	  const interval = setInterval(() => slide(1), 4000) // auto scroll every 4 sec
-	  return () => clearInterval(interval)
-  }, [])
+  const heroRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
-   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	useEffect(() => {
+	  const video = videoRef.current
+	  const hero = heroRef.current
+	  if (!video || !hero) return
+
+	  const isMobile = window.innerWidth < 768
+	  video.muted = isMobile
+
+	  const observer = new IntersectionObserver(
+		([entry]) => {
+		  if (!isMobile) {
+			if (entry.isIntersecting) video.play()
+			else video.pause()
+		  }
+		},
+		{ threshold: 0.3 }
+	  )
+
+	  observer.observe(hero)
+	  return () => observer.disconnect()
+	}, [])
+
+
+
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const templateParams = {
@@ -65,10 +87,10 @@ export default function Home() {
 
     try {
       await emailjs.send(
-        'serviceID',
-        'templateID',
+        'service_pv6cmir',
+        'template_4798riz',
         templateParams,
-        '-publicKey'
+        'AowSTnRMgS5_huZjn'
       )
 
       setSuccess(true)
@@ -91,9 +113,6 @@ export default function Home() {
 			  transition={{ duration: 0.7, ease: "easeOut" }}
 			>
 			  <Image src="/justlogo.png" alt="Space-D" width={50} height={50} priority />
-			 <span className="tracking-widest text-xs md:text-xs text-white">
-				SPACE-D INFRA DEVELOPERS
-			  </span>
 			</motion.div>
 
 			{/* Desktop Menu */}
@@ -111,10 +130,13 @@ export default function Home() {
 
 			{/* Mobile Hamburger */}
 			<button
-			  className="md:hidden text-white text-xl"
-			  onClick={() => setMenuOpen(!menuOpen)}
-			>
-			  ☰
+			  onClick={() => setMenuOpen(true)}
+			  className="md:hidden text-white">
+			  <div className="space-y-1.5">
+				<span className="block w-6 h-0.5 bg-white"></span>
+				<span className="block w-6 h-0.5 bg-white"></span>
+				<span className="block w-6 h-0.5 bg-white"></span>
+			  </div>
 			</button>
 		  </div>
 
@@ -133,17 +155,37 @@ export default function Home() {
 	</header>
 
       {/* Hero */}
-      <section key={heroKey} id="home" className="relative h-[70vh] md:h-screen pt-20 flex items-center justify-center overflow-hidden">
-        <Image src="/banner.jpg" alt="Space-D Banner" fill priority className="object-cover object-center" />
-        <div className="absolute inset-0 bg-black/60" />
+      <section
+		  id="home"
+		  ref={heroRef}
+		  className="relative h-[70vh] md:h-screen pt-20 overflow-hidden">
+		  <div className="absolute inset-0">
+			<video
+			  ref={videoRef}
+			  src="/intro.mp4"
+			  autoPlay
+			  loop
+			  playsInline
+			  className="w-full h-full object-cover"
+			  style={{ volume: 0.2 }}   // low sound on desktop
+			/>
+		  </div>
 
-        <div className="relative z-10 text-center px-4 max-w-full translate-y-38 md:translate-y-40">
-			<p className="mt-3 text-[#FDB614] tracking-[0.3em] text-xs md:text-sm">SPACE-D INFRA DEVELOPERS</p>
-            <h1 className="text-3xl md:text-xl tracking-wider">INNOVATE · DESIGN · SHAPE</h1>
-		    <p className="mt-4 text-white/80 text-sm md:text-base tracking-wide max-w-2xl mx-auto">
-				"Building spaces that stand the test of time, not just today’s trends."</p>
-        </div>
-      </section>
+		  {/* Cinematic dark overlay */}
+		  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black" />
+
+		  {/* Clean curved bottom */}
+		  <svg
+			className="absolute bottom-0 left-0 w-full"
+			viewBox="0 0 1440 90"
+			preserveAspectRatio="none"
+		  >
+			<path
+			  d="M0,0 C240,80 480,80 720,60 960,40 1200,20 1440,30 L1440,90 L0,90 Z"
+			  fill="black"
+			/>
+		  </svg>
+		</section>
 	  
 	  {/* Canva */}
 	  <section className="bg-black py-20">
@@ -208,7 +250,7 @@ export default function Home() {
 			{/* Animated Image */}
 			<div className="relative w-full h-[320px] md:h-[420px] group overflow-hidden">
 			  <Image
-				src="/about-visual.png"
+				src="/about.png"
 				alt="Space-D Brand Visual"
 				fill
 				className="object-contain opacity-80 transition-all duration-1000 ease-out
@@ -309,7 +351,7 @@ export default function Home() {
 
 		  {/* Founder Content */}
 		  <div className="max-w-5xl w-full text-center">
-			<h2 className="text-[#FDB614] tracking-widest mb-2">FOUNDER INFO</h2>
+			<h2 className="text-[#FDB614] tracking-widest mb-2">FOUNDER</h2>
 			<h3 className="text-2xl md:text-3xl tracking-wide mb-1">
 			  Haris Rahman
 		    </h3>
@@ -403,7 +445,7 @@ export default function Home() {
 
 				<button
 				  type="submit"
-				  className="w-full bg-[#FDB614] text-black py-3 rounded-md tracking-widest transition-all duration-300 hover:bg-green-500 hover:scale-105"
+				  className="w-full bg-[#FDB614] text-black py-3 rounded-md tracking-widest transition-all duration-150 hover:bg-green-500 hover:scale-105"
 				>
 				  SEND ENQUIRY
 				</button>
@@ -443,7 +485,7 @@ export default function Home() {
 				  <a href="https://www.instagram.com/space_d_infra_developers/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/instagram.png" className="w-6 h-6" />
 				  </a>
-				  <a href="https://facebook.com/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
+				  <a href="https://facebook.com/share/1CnyrXX1GK/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
 					<img src="/icons/facebook.png" className="w-6 h-6" />
 				  </a>
 				  <a href="https://twitter.com/" target="_blank" className="text-white hover:text-[#FDB614] transition-colors">
@@ -457,6 +499,41 @@ export default function Home() {
 			</div>
 		  </div>
 		</section>
+		
+	 <AnimatePresence>
+		  {menuOpen && (
+			<motion.div
+			  className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-xl flex flex-col items-center justify-center space-y-8"
+			  initial={{ opacity: 0, scale: 1.05 }}
+			  animate={{ opacity: 1, scale: 1 }}
+			  exit={{ opacity: 0, scale: 1.05 }}
+			  transition={{ duration: 0.35, ease: "easeOut" }}
+			>
+			  {/* Close Button */}
+			  <button
+				onClick={() => setMenuOpen(false)}
+				className="absolute top-6 right-6 text-white text-3xl"
+			  >
+				×
+			  </button>
+
+			  {/* Logo */}
+			  <Image src="/justlogo.png" alt="Space-D" width={60} height={60} />
+
+			  {/* Nav Links */}
+			  {["HOME", "ABOUT", "PROJECTS", "FOUNDER", "CONTACT"].map((item) => (
+				<a
+				  key={item}
+				  href={`#${item.toLowerCase()}`}
+				  onClick={() => setMenuOpen(false)}
+				  className="text-white text-xl tracking-widest hover:text-[#FDB614] transition"
+				>
+				  {item}
+				</a>
+			  ))}
+			</motion.div>
+		  )}
+		</AnimatePresence>
     </main>
   )
 }
