@@ -57,7 +57,12 @@ export default function Home() {
 	  if (!video || !hero) return
 
 	  const isMobile = window.innerWidth < 768
-	  video.muted = isMobile
+	  if (isMobile) {
+		video.muted = true
+	  } else {
+		video.muted = false
+		video.volume = 0.2   // 20% volume on desktop
+	  }
 
 	  const observer = new IntersectionObserver(
 		([entry]) => {
@@ -167,7 +172,6 @@ export default function Home() {
 			  loop
 			  playsInline
 			  className="w-full h-full object-cover"
-			  style={{ volume: 0.2 }}   // low sound on desktop
 			/>
 		  </div>
 
