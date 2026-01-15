@@ -5,6 +5,31 @@ import { useState, useEffect, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import { motion, useInView, AnimatePresence } from "framer-motion"
 
+function useCountUp(target: number, duration = 1500) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    let start = 0
+    const increment = target / (duration / 16)
+
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= target) {
+        setCount(target)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 16)
+
+    return () => clearInterval(timer)
+  }, [target, duration])
+
+  return count
+}
+
+
+
 export default function Home() {
 	
   const [form, setForm] = useState({ name: '', phone: '', type: '', message: '' })
@@ -30,6 +55,11 @@ export default function Home() {
 	  { title: "Quality Materials", desc: "Built to last, not just to look good." },
 	  { title: "Professional Supervision", desc: "Every stage monitored by experts." },
   ]
+  
+  const projects = useCountUp(48)
+  const ongoing = useCountUp(8)
+  const years = useCountUp(7)
+  const clients = useCountUp(87)
   
   const [current, setCurrent] = useState(0)
 
@@ -72,6 +102,39 @@ export default function Home() {
       alert('Failed to send enquiry. Please try again.')
     }
   }
+  
+  const reviews = [
+	  {
+		name: "Suresh Kumar, Palakkad",
+		text: "From planning to handover, Space-D maintained complete transparency and quality. The finish of our home exceeded expectations."
+	  },
+	  {
+		name: "Anitha Raj, Coimbatore",
+		text: "Their design sense and site supervision are truly professional. Timely delivery and excellent workmanship."
+	  },
+	  {
+		name: "Rahul Menon, Thrissur",
+		text: "We were impressed by the structural quality and attention to detail. Very reliable and honest team."
+	  },
+	  {
+		name: "Farzana Banu, Malappuram",
+		text: "Space-D converted our vision into reality with perfect planning and budget control."
+	  },
+	  {
+		name: "Vigneshwaran, Erode",
+		text: "Modern design, strong construction, and smooth coordination. Highly recommended."
+	  }
+	]
+
+ const [reviewIndex, setReviewIndex] = useState(0)
+
+	useEffect(() => {
+	  const interval = setInterval(() => {
+		setReviewIndex((prev) => (prev + 1) % reviews.length)
+	  }, 4000)
+	  return () => clearInterval(interval)
+	}, [])
+
 
   return (
     <main className="bg-black text-white scroll-smooth overflow-x-hidden">
@@ -79,14 +142,15 @@ export default function Home() {
       <header className="fixed top-0 w-full bg-black/95 backdrop-blur z-50 border-b border-white/30">
 		  <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
 			{/* Logo */}
-			<motion.div
-			  className="flex items-center gap-2"
-			  initial={{ x: 40, opacity: 0 }}
-			  animate={{ x: 0, opacity: 1 }}
-			  transition={{ duration: 0.7, ease: "easeOut" }}
-			>
-			  <Image src="/justlogo.png" alt="Space-D" width={50} height={50} priority />
-			</motion.div>
+			<a href="/" className="flex items-center gap-2">
+			  <motion.div
+				className="flex items-center gap-2"
+				initial={{ x: 40, opacity: 0 }}
+				animate={{ x: 0, opacity: 1 }}
+				transition={{ duration: 0.7, ease: "easeOut" }}	>
+				<Image src="/justlogo.png" alt="Space-D" width={40} height={40} priority />
+			  </motion.div>
+			</a>
 
 			{/* Desktop Menu */}
 			<nav className="hidden md:flex gap-8 text-xs tracking-[0.2em]">
@@ -165,7 +229,7 @@ export default function Home() {
 
       {/* About */}
       <section id="about" className="bg-black py-6 md:py-16">
-		  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+		  <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
 			{/* Text */}
 			<div className="max-w-5xl w-full text-center">
 			  <h2 className="text-[#FDB614] tracking-widest mb-8">ABOUT US</h2>
@@ -252,7 +316,63 @@ export default function Home() {
 			</div>
 		  </div>
 		</section>
-	  
+		
+	 {/* Counters */}
+	 <section className="bg-black py-20">
+	  <div className="max-w-7xl mx-auto px-6 text-center">
+		<h2 className="text-[#FDB614] tracking-widest mb-10">
+		  OUR ACHIEVEMENTS
+		</h2>
+
+		<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+		  <div>
+			<p className="text-4xl md:text-5xl text-white">{projects}+</p>
+			<p className="text-xs tracking-widest text-[#FDB614]">PROJECTS COMPLETED</p>
+		  </div>
+
+		  <div>
+			<p className="text-4xl md:text-5xl text-white">{ongoing}</p>
+			<p className="text-xs tracking-widest text-[#FDB614]">ONGOING</p>
+		  </div>
+
+		  <div>
+			<p className="text-4xl md:text-5xl text-white">{years}+</p>
+			<p className="text-xs tracking-widest text-[#FDB614]">YEARS EXPERIENCE</p>
+		  </div>
+
+		  <div>
+			<p className="text-4xl md:text-5xl text-white">{clients}+</p>
+			<p className="text-xs tracking-widest text-[#FDB614]">HAPPY CLIENTS</p>
+		  </div>
+		</div>
+	  </div>
+	</section>
+	
+	<section className="bg-black py-20 overflow-hidden">
+	  <div className="max-w-4xl mx-auto px-6 text-center">
+		<h2 className="text-[#FDB614] tracking-widest mb-10">
+		  WHAT OUR CLIENTS SAY
+		</h2>
+
+		<div className="relative h-40 flex items-center justify-center">
+		  <motion.div
+			key={reviewIndex}
+			initial={{ opacity: 0, y: 30 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: -30 }}
+			transition={{ duration: 0.8, ease: "easeOut" }}
+			className="absolute"
+		  >
+			<p className="text-white/90 text-lg leading-relaxed mb-4">
+			  “{reviews[reviewIndex].text}”
+			</p>
+			<p className="text-[#FDB614] tracking-widest text-sm">
+			  - {reviews[reviewIndex].name}
+			</p>
+		  </motion.div>
+		</div>
+	  </div>
+	</section>
 		
 	  {/* Founder */}
 	  <section id="founder" className="min-h-screen flex items-center justify-center bg-black py-15 md:py-10">
