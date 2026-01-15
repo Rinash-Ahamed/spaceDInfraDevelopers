@@ -47,38 +47,6 @@ export default function Home() {
 		  : (prev - 1 + images.length) % images.length
 	  )
 	}
-  
-  const heroRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-	useEffect(() => {
-	  const video = videoRef.current
-	  const hero = heroRef.current
-	  if (!video || !hero) return
-
-	  const isMobile = window.innerWidth < 768
-	  if (isMobile) {
-		video.muted = true
-	  } else {
-		video.muted = false
-		video.volume = 0.2   // 20% volume on desktop
-	  }
-
-	  const observer = new IntersectionObserver(
-		([entry]) => {
-		  if (!isMobile) {
-			if (entry.isIntersecting) video.play()
-			else video.pause()
-		  }
-		},
-		{ threshold: 0.3 }
-	  )
-
-	  observer.observe(hero)
-	  return () => observer.disconnect()
-	}, [])
-
-
 
  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -162,23 +130,27 @@ export default function Home() {
       {/* Hero */}
       <section
 		  id="home"
-		  ref={heroRef}
-		  className="relative h-[70vh] md:h-screen pt-20 overflow-hidden">
-		  <div className="absolute inset-0">
+		  className="relative h-[70vh] md:h-screen pt-20 overflow-hidden"
+		>
+		  <div
+			className="absolute inset-0"
+			style={{ clipPath: "inset(0 0 0 0 round 40px)" }}
+		  >
 			<video
-			  ref={videoRef}
 			  src="/intro.mp4"
 			  autoPlay
+			  muted
 			  loop
 			  playsInline
+			  preload="auto"
 			  className="w-full h-full object-cover"
 			/>
 		  </div>
 
-		  {/* Cinematic dark overlay */}
+		  {/* Cinematic gradient */}
 		  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black" />
 
-		  {/* Clean curved bottom */}
+		  {/* Curved bottom mask */}
 		  <svg
 			className="absolute bottom-0 left-0 w-full"
 			viewBox="0 0 1440 90"
@@ -189,55 +161,6 @@ export default function Home() {
 			  fill="black"
 			/>
 		  </svg>
-		</section>
-	  
-	  {/* Canva */}
-	  <section className="bg-black py-20">
-		  <div className="max-w-7xl mx-auto px-6">
-			<h2 className="text-[#FDB614] tracking-widest mb-10 text-center">
-			  OUR PROCESS
-			</h2>
-
-			<motion.div
-			  className="grid grid-cols-2 md:grid-cols-5 gap-6"
-			  initial={{ opacity: 0, y: 80 }}
-			  whileInView={{ opacity: 1, y: 0 }}
-			  transition={{ duration: 0.9, ease: "easeOut" }}
-			  viewport={{ once: true }}
-			>
-			  {canvaStory.map((item, i) => (
-				  <div
-					key={i}
-					className={`group relative rounded-xl overflow-hidden
-								transform transition-all duration-300
-								hover:-translate-y-3 hover:shadow-2xl
-								${i === 4 ? "hidden md:block" : ""}`}   // hide 5th on mobile
-				  >
-					<Image
-					  src={item.img}
-					  alt={item.title}
-					  width={400}
-					  height={300}
-					  className="w-full h-[220px] object-cover"
-					/>
-
-					<div
-					  className="absolute inset-x-0 bottom-0 bg-black/80
-						 translate-y-0 md:translate-y-full md:group-hover:translate-y-0
-						 transition-transform duration-300
-						 p-4"
-					>
-					  <h3 className="tracking-widest text-sm text-[#FDB614]">
-						{item.title}
-					  </h3>
-					  <p className="text-xs mt-1 text-white">
-						{item.desc}
-					  </p>
-					</div>
-				  </div>
-				))}
-			</motion.div>
-		  </div>
 		</section>
 
       {/* About */}
@@ -254,7 +177,7 @@ export default function Home() {
 			{/* Animated Image */}
 			<div className="relative w-full h-[320px] md:h-[420px] group overflow-hidden">
 			  <Image
-				src="/about.png"
+				src="/about.jpg"
 				alt="Space-D Brand Visual"
 				fill
 				className="object-contain opacity-80 transition-all duration-1000 ease-out
@@ -343,9 +266,9 @@ export default function Home() {
 		>
 		  {/* Founder Image */}
 		  <div className="flex justify-center">
-			<div className="relative w-[260px] h-[320px] md:w-[320px] md:h-[400px] rounded-xl overflow-hidden shadow-2xl group">
+			<div className="relative w-[260px] h-[320px] md:w-[480px] md:h-[400px] rounded-xl overflow-hidden shadow-2xl group">
 			  <Image
-				src="/dr.png"
+				src="/founder.png"
 				alt="Founder - Space-D Infra Developers"
 				fill
 				className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
