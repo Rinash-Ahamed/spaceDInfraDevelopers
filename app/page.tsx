@@ -102,6 +102,39 @@ export default function Home() {
       alert('Failed to send enquiry. Please try again.')
     }
   }
+  
+  const reviews = [
+	  {
+		name: "Suresh Kumar, Palakkad",
+		text: "From planning to handover, Space-D maintained complete transparency and quality. The finish of our home exceeded expectations."
+	  },
+	  {
+		name: "Anitha Raj, Coimbatore",
+		text: "Their design sense and site supervision are truly professional. Timely delivery and excellent workmanship."
+	  },
+	  {
+		name: "Rahul Menon, Thrissur",
+		text: "We were impressed by the structural quality and attention to detail. Very reliable and honest team."
+	  },
+	  {
+		name: "Farzana Banu, Malappuram",
+		text: "Space-D converted our vision into reality with perfect planning and budget control."
+	  },
+	  {
+		name: "Vigneshwaran, Erode",
+		text: "Modern design, strong construction, and smooth coordination. Highly recommended."
+	  }
+	]
+
+ const [reviewIndex, setReviewIndex] = useState(0)
+
+	useEffect(() => {
+	  const interval = setInterval(() => {
+		setReviewIndex((prev) => (prev + 1) % reviews.length)
+	  }, 4000)
+	  return () => clearInterval(interval)
+	}, [])
+
 
   return (
     <main className="bg-black text-white scroll-smooth overflow-x-hidden">
@@ -311,6 +344,32 @@ export default function Home() {
 			<p className="text-4xl md:text-5xl text-white">{clients}+</p>
 			<p className="text-xs tracking-widest text-[#FDB614]">HAPPY CLIENTS</p>
 		  </div>
+		</div>
+	  </div>
+	</section>
+	
+	<section className="bg-black py-20 overflow-hidden">
+	  <div className="max-w-4xl mx-auto px-6 text-center">
+		<h2 className="text-[#FDB614] tracking-widest mb-10">
+		  WHAT OUR CLIENTS SAY
+		</h2>
+
+		<div className="relative h-40 flex items-center justify-center">
+		  <motion.div
+			key={reviewIndex}
+			initial={{ opacity: 0, y: 30 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: -30 }}
+			transition={{ duration: 0.8, ease: "easeOut" }}
+			className="absolute"
+		  >
+			<p className="text-white/90 text-lg leading-relaxed mb-4">
+			  “{reviews[reviewIndex].text}”
+			</p>
+			<p className="text-[#FDB614] tracking-widest text-sm">
+			  - {reviews[reviewIndex].name}
+			</p>
+		  </motion.div>
 		</div>
 	  </div>
 	</section>
