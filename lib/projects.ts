@@ -1,15 +1,21 @@
-'use server'
+import { readdir } from 'node:fs/promises'
+import path from 'node:path'
 
-import fs from 'fs'
-import path from 'path'
+export type ProjectImage = {
+  id: string
+  src: string
+  title: string
+  category: string
+  className: string
+}
 
-export async function getProjectImages() {
+export async function getProjectImages(): Promise<ProjectImage[]> {
   const projectsDir = path.join(process.cwd(), 'public', 'projects')
   
   try {
-    const files = fs.readdirSync(projectsDir)
+    const files = await readdir(projectsDir, { withFileTypes: true })
     // Filter for common image extensions
-    const images = files.filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file))
+    const images = files.filter(file => file.isFile() && /\.(jpg|jpeg|png|webp)$/i.test(file.name)).map(file => file.name).sort()
     
     return images.map((file, i) => {
       // Format title from filename (e.g., "1-modern-villa.jpg" -> "Modern Villa")
@@ -26,10 +32,10 @@ export async function getProjectImages() {
       else if (pos === 4) className = "md:col-span-2 md:row-span-1"
 
       return {
-        id: i,
+        id: file,
         title: title || `Project ${i + 1}`,
         category: "ARCHITECTURE",
-        src: `/projects/${file}`,
+        src: `/projects/${encodeURIComponent(file)}`,
         className
       }
     })
