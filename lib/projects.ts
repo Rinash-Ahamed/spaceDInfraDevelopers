@@ -11,12 +11,12 @@ export type ProjectImage = {
 
 export async function getProjectImages(): Promise<ProjectImage[]> {
   const projectsDir = path.join(process.cwd(), 'public', 'projects')
-  
+
   try {
     const files = await readdir(projectsDir, { withFileTypes: true })
     // Filter for common image extensions
     const images = files.filter(file => file.isFile() && /\.(jpg|jpeg|png|webp)$/i.test(file.name)).map(file => file.name).sort()
-    
+
     return images.map((file, i) => {
       // Format title from filename (e.g., "1-modern-villa.jpg" -> "Modern Villa")
       const nameWithoutExt = file.replace(/\.[^/.]+$/, "")

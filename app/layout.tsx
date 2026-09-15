@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import { Playfair_Display } from "next/font/google";
-import "@/app/globals.css";
+import type { Metadata } from "next"
+import { Playfair_Display } from "next/font/google"
+import "@/app/globals.css"
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: 'Space-D Infra Developers',
@@ -13,12 +13,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/justlogo.png',
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -28,5 +28,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }
