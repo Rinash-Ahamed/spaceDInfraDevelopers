@@ -40,7 +40,6 @@ export function Footer() {
             className="group inline-flex w-fit shrink-0 items-center gap-6 rounded-full border border-[#FDB614]/60 px-7 py-4 text-xs tracking-widest text-[#FDB614] transition-colors hover:bg-[#FDB614] hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FDB614]"
           >
             LET’S BUILD TOGETHER
-            <span aria-hidden="true" className="text-xl transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none">↗</span>
           </a>
         </div>
 
@@ -82,9 +81,9 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-white/75">
               {socialLinks.map(([label, href, icon]) => (
                 <li key={label}>
-                  <a href={href} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-3 ${linkStyle}`}>
-                    <Image src={icon} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
-                    {label}<span aria-hidden="true" className="text-[#FDB614]/70">↗</span>
+                  <a id={label === 'WhatsApp' ? 'footer-whatsapp' : undefined} href={href} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-3 ${linkStyle}`}>
+                    <Image id={label === 'WhatsApp' ? 'footer-whatsapp-icon' : undefined} src={icon} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
+                    {label}
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>

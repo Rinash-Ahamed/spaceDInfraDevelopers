@@ -10,6 +10,7 @@ import { Founder } from '@/components/home/founder'
 import { Faq } from '@/components/home/faq'
 import { Contact } from '@/components/home/contact'
 import { Footer } from '@/components/home/footer'
+import { WhatsAppBubble } from '@/components/home/whatsapp-bubble'
 import { getProjectImages } from '@/lib/projects'
 
 export default async function Home() {
@@ -31,6 +32,7 @@ export default async function Home() {
         <Contact />
       </main>
       <Footer />
+      <WhatsAppBubble />
     </>
   )
 }
