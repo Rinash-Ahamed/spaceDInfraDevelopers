@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { reviews } from '@/data/home'
@@ -16,9 +18,9 @@ export function Testimonials() {
   return (
     <section className="bg-black py-16 md:py-24 overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-[#FDB614] tracking-widest mb-10 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">
+        <SectionHeading className="text-[#FDB614] tracking-widest mb-10 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">
           WHAT OUR CLIENTS SAY
-        </h2>
+        </SectionHeading>
 
         <div className="relative h-40 flex items-center justify-center">
           <motion.div

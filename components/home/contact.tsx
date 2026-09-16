@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
 import { sendEnquiry } from '@/lib/enquiries'
@@ -111,7 +113,7 @@ export function Contact() {
       </svg>
       <div className="relative max-w-xl w-full">
 
-        <h2 className="text-[#FDB614] tracking-widest text-center mb-8 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">CONTACT US</h2>
+        <SectionHeading className="text-[#FDB614] tracking-widest text-center mb-8 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">CONTACT US</SectionHeading>
 
         <div className="mb-8 text-center">
           <p className="text-white/80 text-sm md:text-base">

@@ -1,3 +1,5 @@
+import { SectionHeading } from './section-heading'
+
 import Image from 'next/image'
 
 const navigation = [
@@ -30,10 +32,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-8 border-b border-white/10 py-14 md:flex-row md:items-end md:justify-between md:py-20">
           <div>
-            <h2 className="max-w-2xl font-[family-name:var(--font-playfair)] text-4xl leading-[1.15] sm:text-5xl md:text-6xl">
-              Every great space<br />
-              starts with <span className="italic text-[#FDB614]">a conversation.</span>
-            </h2>
+            <SectionHeading className="max-w-2xl font-[family-name:var(--font-playfair)] text-4xl leading-[1.15] sm:text-5xl md:text-6xl">
+              <span className="text-white">Every great space<br />starts with a </span>conversation.
+            </SectionHeading>
           </div>
           <a
             href="#contact"

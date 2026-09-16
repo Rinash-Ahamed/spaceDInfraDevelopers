@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { faqs } from '@/data/home'
@@ -18,9 +20,9 @@ export function Faq() {
           className="text-center mb-10 md:mb-14"
         >
           <p className="text-[#FDB614] tracking-widest text-sm mb-3">CLIENT QUESTIONS</p>
-          <h2 className="text-white text-3xl md:text-5xl font-[family-name:var(--font-playfair)]">
+          <SectionHeading className="text-white text-3xl md:text-5xl font-[family-name:var(--font-playfair)]">
             Frequently Asked Questions
-          </h2>
+          </SectionHeading>
           <p className="text-white/60 mt-4 leading-relaxed">
             Clear answers before the first site visit.
           </p>

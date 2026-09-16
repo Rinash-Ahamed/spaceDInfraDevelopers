@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion } from 'framer-motion'
 import { AnimatedCounter } from './animated-counter'
 
@@ -22,9 +24,9 @@ export function Achievements() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-[#FDB614] tracking-widest mb-10 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">
+        <SectionHeading className="text-[#FDB614] tracking-widest mb-10 text-3xl md:text-4xl font-[family-name:var(--font-playfair)]">
           OUR ACHIEVEMENTS
-        </h2>
+        </SectionHeading>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>

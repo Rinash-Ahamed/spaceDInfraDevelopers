@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion } from 'framer-motion'
 import { buildSteps } from '@/data/home'
 
@@ -64,9 +66,9 @@ export function BuildFlow() {
           className="max-w-2xl mb-12 md:mb-16"
         >
           <p className="text-[#FDB614] tracking-widest text-sm mb-3">BUILD FLOW</p>
-          <h2 className="text-white text-3xl md:text-5xl font-[family-name:var(--font-playfair)]">
-            From Ground Marking to Handover
-          </h2>
+          <SectionHeading className="text-white text-3xl md:text-5xl font-[family-name:var(--font-playfair)]">
+            <span className="text-white">From Ground</span> Marking to Handover
+          </SectionHeading>
           <p className="text-white/60 mt-4 leading-relaxed">
             A clear construction rhythm keeps every decision, site update, and finish moving with purpose.
           </p>

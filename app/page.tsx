@@ -19,7 +19,7 @@ export default async function Home() {
   return (
     <>
       <Navigation />
-      <main className="bg-black text-white scroll-smooth overflow-x-hidden">
+      <main className="bg-black text-white overflow-x-hidden">
         <Hero />
         <About />
         <Values />

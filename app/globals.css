@@ -2,6 +2,13 @@
 
 html {
   scroll-padding-top: 110px;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @keyframes fadeInUp {
@@ -18,20 +25,13 @@ html {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -40,36 +40,59 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.hero-gold-gradient {
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: #fdb614;
+  color: #000;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #fdb614;
+  outline-offset: 4px;
+}
+
+.gold-text-gradient {
+  display: inline-block;
   color: #fdb614;
+  -webkit-text-fill-color: #fdb614;
 }
 
 @supports (background-clip: text) or (-webkit-background-clip: text) {
-  .hero-gold-gradient {
+  .gold-text-gradient {
     background-image: linear-gradient(110deg, #fdb614 0%, #ffe7a0 25%, #d99508 50%, #fdb614 75%, #ffe7a0 100%);
     background-size: 200% 100%;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    animation: heroGoldShimmer 6s ease-in-out infinite alternate;
+    -webkit-text-fill-color: transparent;
+    animation: goldShimmer 6s ease-in-out infinite alternate;
   }
 }
 
-@keyframes heroGoldShimmer {
+@keyframes goldShimmer {
   from { background-position: 0% 50%; }
   to { background-position: 100% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-gold-gradient {
+  .gold-text-gradient {
     animation: none;
   }
 }
 
 @media (forced-colors: active) {
-  .hero-gold-gradient {
+  .gold-text-gradient {
     background: none;
     color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
     animation: none;
   }
 }

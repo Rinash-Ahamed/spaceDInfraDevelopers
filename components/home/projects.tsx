@@ -1,5 +1,7 @@
 'use client'
 
+import { SectionHeading } from './section-heading'
+
 import { motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ProjectImage } from '@/lib/projects'
@@ -18,11 +20,11 @@ export function Projects({ projects }: { projects: ProjectImage[] }) {
           className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6"
         >
           <div>
-            <h2 className="text-4xl md:text-6xl text-white font-[family-name:var(--font-playfair)]">
+            <SectionHeading className="text-4xl md:text-6xl text-white font-[family-name:var(--font-playfair)]">
               Featured Projects
-            </h2>
+            </SectionHeading>
           </div>
-          <p className="text-white/60 max-w-md text-sm md:text-base leading-relaxed">
+          <p className="text-white/75 max-w-md text-sm md:text-base leading-7">
             A curated selection of our finest architectural and interior achievements,
             blending aesthetic elegance with structural integrity.
           </p>

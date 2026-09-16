@@ -42,11 +42,11 @@ export function Hero() {
             </span>{" "}
             <span className="inline-block overflow-hidden align-bottom pb-2 -mb-2 pr-2">
               <span className="inline-block animate-[fadeInUp_1s_cubic-bezier(0.16,1,0.3,1)_0.3s_both] motion-reduce:animate-none">
-                <span className="hero-gold-gradient">Building Trust.</span>
+                <span className="gold-text-gradient">Building Trust.</span>
               </span>
             </span>
           </h1>
-          <p className="max-w-lg mt-4 text-white/65 leading-relaxed text-sm md:text-base">
+          <p className="max-w-lg mt-5 text-white/80 leading-7 text-sm md:text-base">
             Thoughtful design, reliable construction, and transparent execution for homes and commercial spaces built to last.
           </p>
           <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row">
