@@ -24,7 +24,7 @@ The production build downloads the Playfair Display font from Google and require
 - `app/page.tsx`: server-rendered homepage composition and project loading.
 - `components/home/`: individual page sections; interactive state stays in its section.
 - `data/home.ts`: values, construction steps, testimonials, and FAQ content.
-- `lib/projects.ts`: reads images from `public/projects`, derives titles and grid placement.
+- `lib/projects.ts`: reads images from `public/projects` and derives accessible image descriptions.
 - `lib/enquiries.ts`: loads EmailJS only when an enquiry is submitted.
 - `app/globals.css`: Tailwind entry point and global styles.
 - `public/`: website media.

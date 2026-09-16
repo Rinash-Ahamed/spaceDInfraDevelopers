@@ -5,8 +5,6 @@ export type ProjectImage = {
   id: string
   src: string
   title: string
-  category: string
-  className: string
 }
 
 export async function getProjectImages(): Promise<ProjectImage[]> {
@@ -25,18 +23,10 @@ export async function getProjectImages(): Promise<ProjectImage[]> {
         .replace(/[-_]/g, " ") // Replaces dashes and underscores with spaces
         .replace(/\b\w/g, l => l.toUpperCase()) // Capitalizes the first letter of each word
 
-      // Dynamic Bento Box layout calculation
-      const pos = i % 5
-      let className = "md:col-span-1 md:row-span-1"
-      if (pos === 0) className = "md:col-span-2 md:row-span-2"
-      else if (pos === 4) className = "md:col-span-2 md:row-span-1"
-
       return {
         id: file,
         title: title || `Project ${i + 1}`,
-        category: "ARCHITECTURE",
         src: `/projects/${encodeURIComponent(file)}`,
-        className
       }
     })
   } catch (error) {
