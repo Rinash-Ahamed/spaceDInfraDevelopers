@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { useCallback, useState } from 'react'
 import { sendEnquiry } from '@/lib/enquiries'
 
@@ -216,23 +215,6 @@ export function Contact() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-          </div>
-
-          {/* Social Media */}
-          <div className="mt-8 flex justify-center gap-6">
-            <a href="https://www.instagram.com/space_d_infra_developers/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FDB614] transition-colors">
-              <Image src="/icons/instagram.png" alt="Instagram" width={24} height={24} className="w-6 h-6" />
-            </a>
-            <a href="https://facebook.com/share/1CnyrXX1GK/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FDB614] transition-colors">
-              <Image src="/icons/facebook.png" alt="Facebook" width={24} height={24} className="w-6 h-6" />
-            </a>
-            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FDB614] transition-colors">
-              <Image src="/icons/twitter.png" alt="Twitter" width={24} height={24} className="w-6 h-6" />
-            </a>
-            <a href="https://wa.me/919995060708?text=Hi%20Space-D%20Infra%20Developers,%20I%20would%20like%20to%20enquire%20about%20construction%20services."
-              target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FDB614] transition-colors">
-              <Image src="/icons/whatsapp.png" alt="WhatsApp" width={24} height={24} className="w-6 h-6" />
-            </a>
           </div>
         </div>
       </div>

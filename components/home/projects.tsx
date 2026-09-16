@@ -18,10 +18,6 @@ export function Projects({ projects }: { projects: ProjectImage[] }) {
           className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6"
         >
           <div>
-            <p className="flex items-center gap-3 text-[#FDB614] tracking-[0.3em] mb-4 text-[10px] font-medium">
-              <span aria-hidden="true" className="h-px w-8 bg-[#FDB614]" />
-              SELECTED WORK
-            </p>
             <h2 className="text-4xl md:text-6xl text-white font-[family-name:var(--font-playfair)]">
               Featured Projects
             </h2>
